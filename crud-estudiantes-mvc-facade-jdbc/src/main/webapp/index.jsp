@@ -11,8 +11,12 @@
 <title>Universidad</title>
 <style>
 	table, th, td {
-  		border: 1px solid;
-	}
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+			th, td {
+				padding: 10px;
+			}
 </style>
 </head>
 <body>
