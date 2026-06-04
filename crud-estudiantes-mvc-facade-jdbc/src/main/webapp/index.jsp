@@ -21,8 +21,8 @@
 </head>
 <body>
 	<%
-	EstudianteService service = new EstudianteServiceImpl();
-	List<Estudiante> estudiantes = service.getEstudiantes();
+		EstudianteService estudianteService = new EstudianteServiceImpl();
+		List<Estudiante> estudiantes = estudianteService.getEstudiantes();
 	%>
 	<h1>Bienvenido a nuestra universidad</h1>
 	<br>
@@ -41,7 +41,7 @@
 		</thead>
 		<tbody>
 			<%
-			for (Estudiante estudiante : estudiantes) {
+				for (Estudiante estudiante : estudiantes) {
 			%>
 			<tr>
 				<td><%=estudiante.nombre()%></td>
@@ -57,5 +57,9 @@
 			%>
 		</tbody>
 	</table>
+	<div>
+		<h1>Quieres Matricularte con nosotros</h1>
+		<a href="formularioAltaModificacion.jsp">Haz click aqui</a>
+	</div>
 </body>
 </html>

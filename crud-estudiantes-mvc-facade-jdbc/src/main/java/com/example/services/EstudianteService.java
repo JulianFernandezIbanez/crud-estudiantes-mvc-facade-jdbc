@@ -8,4 +8,5 @@ import com.example.models.Estudiante;
 public interface EstudianteService {
 	public abstract boolean isConnectionOK() throws SQLException, Exception;
 	public abstract List<Estudiante> getEstudiantes();
+	public abstract void altaEstudiante(Estudiante estudiante, List<String> emails, List<String> telefonos) throws SQLException;
 }
