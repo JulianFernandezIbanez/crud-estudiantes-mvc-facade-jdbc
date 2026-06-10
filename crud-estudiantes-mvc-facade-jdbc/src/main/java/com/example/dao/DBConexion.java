@@ -92,7 +92,7 @@ public class DBConexion implements AutoCloseable {
 				+ "`beca`, `totalAsignaturas`, "
 				+ "`Facultades_id`) VALUES "
 				+ "(?, ?, ?, ?, ?, ?, ?, ?)";
-		String query2 = "INSERT INTO `universidad`.`Correos` (`email`, `Estudiantes_id`) "
+		String query2 = "INSERT INTO `universidad`.`Correo` (`email`, `Estudiantes_id`) "
 				+ "VALUES (?, ?)";
 		String query3 = "INSERT INTO `universidad`.`Telefonos` (`numero`, `Estudiantes_id`) "
 				+ "VALUES (?, ?)";
@@ -158,6 +158,44 @@ public class DBConexion implements AutoCloseable {
 			connection.setAutoCommit(true);
 		}
 		
+	}
+	
+public ResultSet getInfo(int idEstudinte, Connection connection) {
+		
+		ResultSet rs = null;
+		String query = "SELECT "
+				+ "`universidad`.`Estudiantes`.id idEstudiante, "
+				+ "`universidad`.`Estudiantes`.nombre nombreEstudiante, "
+				+ "`universidad`.`Estudiantes`.primerApellido, "
+				+ "`universidad`.`Estudiantes`.segundoApellido, "
+				+ "`universidad`.`Estudiantes`.fechaNacimiento, "
+				+ "`universidad`.`Estudiantes`.genero, "
+				+ "`universidad`.`Estudiantes`.beca, "
+				+ "`universidad`.`Estudiantes`.totalAsignaturas, "
+				+ "`universidad`.`Estudiantes`.facultades_id, "
+				+ "fac.id idFac, "
+				+ "fac.nombre nombreFac, "
+				+ "tel.numero, "
+				+ "co.email "
+				+ "FROM `universidad`.`Estudiantes`"
+				+ "LEFT JOIN `universidad`.`Facultades` fac ON `universidad`.`Estudiantes`.Facultades_id = fac.id "
+				+ "LEFT JOIN `universidad`.`Correo` co ON `universidad`.`Estudiantes`.id = co.Estudiantes_id "
+				+ "LEFT JOIN `universidad`.`Telefonos` tel ON `universidad`.`Estudiantes`.id = tel.Estudiantes_id "
+				+ "WHERE `universidad`.`Estudiantes`.id = ?;";
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = connection.prepareStatement(query,
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+			stmt.setInt(1, idEstudinte);
+			rs = stmt.executeQuery();
+		} catch (Exception e) {
+			LOG.severe("Error al conseguir la informacion "+ e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return rs;
 	}
 	
 	@Override

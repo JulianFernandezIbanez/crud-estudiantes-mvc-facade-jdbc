@@ -51,6 +51,7 @@
 				<td><%=estudiante.Genero()%></td>
 				<td><%=estudiante.TotalAsignaturas()%></td>
 				<td><%=estudiante.Beca()%></td>
+				<td><a href="UpdateController?idEstudiante=<%= estudiante.id() %>">Modificar</a></td>
 			</tr>
 			<%
 			}

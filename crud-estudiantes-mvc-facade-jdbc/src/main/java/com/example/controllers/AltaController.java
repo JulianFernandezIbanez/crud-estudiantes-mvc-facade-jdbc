@@ -43,6 +43,7 @@ public class AltaController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int idEstudiante = Integer.parseInt(request.getParameter("idEstudiante"));
 		String nombre = request.getParameter("nombre");
 		String primerApellido = request.getParameter("primerApellido");
 		String segundoApellido = request.getParameter("segundoApellido") == null ?
@@ -55,7 +56,7 @@ public class AltaController extends HttpServlet {
 		List<String> dirCorreo = null;
 		List<String> numTelefono = null;
 		
-		if(request.getParameter("correo") != null) {
+		if(request.getParameter("correos") != null) {
 			String correos = request.getParameter("correos");
 			String[] direccionesDeCorreoRecibidos = correos.split(";");
 			
@@ -81,13 +82,19 @@ public class AltaController extends HttpServlet {
 		
 		EstudianteService estudianteService = new EstudianteServiceImpl();
 		
-		try {
-			estudianteService.altaEstudiante(estudiante, dirCorreo, numTelefono);
-			//estudiante = null;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (idEstudiante == 0) {
+			try {
+				estudianteService.altaEstudiante(estudiante, dirCorreo, numTelefono);
+				//estudiante = null;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			estudianteService.updateEstudiante(estudiante, dirCorreo, numTelefono);
 		}
+		
+		
 		
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
